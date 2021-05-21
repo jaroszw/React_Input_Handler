@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 const SimpleInput = (props) => {
-  const nameInputRef = useRef();
   const [enteredName, setEnteredName] = useState("");
   const [enteredNameIsValid, setEneteredNameIsValid] = useState(false);
   const [enteredNameTouched, setEnteredNameTouched] = useState(false);
@@ -16,6 +15,10 @@ const SimpleInput = (props) => {
 
   const nameInputChangeHandler = (e) => {
     setEnteredName(e.target.value);
+
+    if (e.target.value.trim() !== "") {
+      setEneteredNameIsValid(true);
+    }
   };
 
   const nameInputBlurHandler = () => {
@@ -23,7 +26,6 @@ const SimpleInput = (props) => {
 
     if (enteredName.trim() === "") {
       setEneteredNameIsValid(false);
-      return;
     }
   };
 
@@ -39,9 +41,6 @@ const SimpleInput = (props) => {
     setEneteredNameIsValid(true);
 
     console.log(enteredName);
-    console.log(nameInputRef.current.value);
-
-    // nameInputRef.current.value = "";
     setEnteredName("");
   };
 
@@ -54,7 +53,6 @@ const SimpleInput = (props) => {
       <div className={nameInputClasses}>
         <label htmlFor="name">Your Name</label>
         <input
-          ref={nameInputRef}
           type="text"
           id="name"
           onChange={nameInputChangeHandler}
